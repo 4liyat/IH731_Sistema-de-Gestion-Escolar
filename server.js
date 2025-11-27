@@ -40,10 +40,10 @@ app.use('/api/', limitadorGeneral);
 // Logging de seguridad
 app.use(logSeguridad);
 
-// Morgan - Logging de peticiones HTTP
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
+// Morgan - Logging de peticiones HTTP (DESACTIVADO)
+// if (process.env.NODE_ENV === 'development') {
+//   app.use(morgan('dev'));
+// }
 
 // ==================== MIDDLEWARES GENERALES ====================
 
@@ -134,7 +134,7 @@ const iniciarServidor = async () => {
 
     // Sincronizar modelos con la base de datos
     console.log('🔄 Sincronizando modelos...');
-    await syncDatabase(false); // false = no borrar datos existentes
+    await syncDatabase(true); // true = borrar datos existentes (SOLO PARA DESARROLLO)
 
     // Iniciar servidor
     app.listen(PORT, () => {

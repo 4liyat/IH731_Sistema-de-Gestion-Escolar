@@ -32,9 +32,14 @@ const configurarHelmet = () => {
 
 // Middleware para configurar CORS
 const configurarCORS = () => {
-  const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  let allowedOrigins = process.env.ALLOWED_ORIGINS 
     ? process.env.ALLOWED_ORIGINS.split(',') 
-    : ['http://localhost:3000']; // Default for development
+    : ['http://localhost:3000'];
+
+  // Siempre permitir el frontend de desarrollo
+  if (!allowedOrigins.includes('http://localhost:5173')) {
+    allowedOrigins.push('http://localhost:5173');
+  }
 
   return cors({
     origin: function (origin, callback) {

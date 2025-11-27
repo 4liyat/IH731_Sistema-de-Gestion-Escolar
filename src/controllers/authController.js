@@ -40,6 +40,8 @@ const registro = async (req, res) => {
       });
     }
 
+    console.log('DEBUG: req.body en registro:', req.body);
+    console.log('DEBUG: Datos para Usuario.create:', { username, email, password, rol: rol || 'estudiante' });
     // Crear nuevo usuario (el password se encripta automáticamente con el hook)
     const nuevoUsuario = await Usuario.create({
       username,
@@ -60,11 +62,12 @@ const registro = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error('Error en registro:', error);
+    console.error('Error COMPLETO en registro:', error); // Log full object
     res.status(500).json({
       success: false,
       message: 'Error al registrar usuario',
-      error: error.message
+      error: error.message,
+      details: JSON.stringify(error) // Send details to client for visibility
     });
   }
 };
